@@ -1,0 +1,20 @@
+{% for item in values %}
+{ "jgroups" => {
+      "stack" => {
+          "{{ item.stackname }}" => {
+              "transport" => {
+                  "TRANSPORT" => {
+                      "type" => "{{ item.transport }}"
+                  }
+              },
+              "protocol" => {
+                {% for protocol in item.protocols %}
+                 "{{ protocol.name }}" => {
+                 }{% if not loop.last %},{% endif %}
+                {% endfor %}
+              }
+           }
+      }
+   }
+}
+{% endfor %}

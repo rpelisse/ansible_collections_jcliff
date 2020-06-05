@@ -360,6 +360,8 @@ def execute_rules_with_jcliff(data):
     add_to_env('JCLIFF_HOME', data['jcliff_home'])
 
     try:
+        if not data["debug_mode"] is None:
+          print("JCLIFF> " + str(jcliff_command_line))
         output = subprocess.check_output(jcliff_command_line,
                                          stderr=subprocess.STDOUT,
                                          shell=False,
@@ -475,6 +477,14 @@ def main():
                                 type='list', required=False, elements='dict', options=dict(
                                     name=dict(type='str', required=False),
                                     value=dict(type='str', required=False))),
+                            jgroups=dict(
+                                type='list', required=False, elements='dict', options=dict(
+                                    stackname=dict(type='str', required=True),
+                                    transport=dict(type='str', required=True),
+                                    protocols=dict(
+                                        type='list', required=True, elements='dict', options=dict(
+                                            name=dict(type='str', required=True),
+                                            )))),
                             deployments=dict(
                                 type='list', required=False, elements='dict', options=dict(
                                     artifact_id=dict(
